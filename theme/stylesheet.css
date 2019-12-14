@@ -1,0 +1,56 @@
+/*  phpBB3 Style Sheet
+    --------------------------------------------------------------
+	Style name:			Saphic
+	Based on style:		prosilver (the default phpBB 3.2.x style)
+	Original author:	Tom Beddard ( http://www.subblue.com/ )
+	Modified by:		Melvin García ( http://www.melvingarcia.com/ )
+    --------------------------------------------------------------
+*/
+
+@import url("normalize.css?v=3.2");
+@import url("base.css?v=3.2");
+@import url("utilities.css?v=3.2");
+@import url("common.css?v=3.2");
+@import url("links.css?v=3.2");
+@import url("content.css?v=3.2");
+@import url("buttons.css?v=3.2");
+@import url("cp.css?v=3.2");
+@import url("forms.css?v=3.2");
+@import url("icons.css?v=3.2");
+@import url("colours.css?v=3.2");
+@import url("responsive.css?v=3.2");
+
+/* Custom CSS
+    --------------------------------------------------------------
+*/
+
+#topseparator { 	
+	background-color: #A2BA25; 
+	padding: 5px;
+}
+
+.navbar_footer {
+	background: #585858;
+	border-radius: 7px;
+    padding: 3px 10px;
+}
+
+#nav-footer, #nav-footer a, .navbar-top, .navbar-top a {
+    color: #FFFFFF;
+}
+
+.white li a {
+    background: #FFFFFF;
+}
+
+.dropdown-contents li a {
+    color: #535353 !important;
+}
+
+.dropdown-extended .footer > a {
+	color: #4F4F4F
+}
+
+li.row.bg2 {
+    background: #eaefd1 none repeat scroll 0 0;
+}
