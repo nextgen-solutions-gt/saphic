@@ -672,6 +672,11 @@ Colours and backgrounds for buttons.css
 	box-shadow: 0 0 10px #545555;
 }
 
+.search-results li:hover,
+.search-results li.active {
+	background-color: #ebf6cf;
+}
+
 /* Icon images
 ---------------------------------------- */
 
