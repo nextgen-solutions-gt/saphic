@@ -175,13 +175,13 @@
 		<!-- EVENT navbar_header_logged_out_content -->
 	<!-- ENDIF -->
 
-		<!-- IF S_DISPLAY_SEARCH and not S_IN_SEARCH -->
+		{% if S_DISPLAY_SEARCH and not S_IN_SEARCH %}
 			<li class="rightside responsive-search">
-				<a href="{U_SEARCH}" title="{L_SEARCH_ADV_EXPLAIN}" role="menuitem">
-					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">{L_SEARCH}</span>
+				<a href="{{ U_SEARCH }}" title="{{ lang('SEARCH_ADV_EXPLAIN') }}" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">{{ lang('SEARCH') }}</span>
 				</a>
 			</li>
-		<!-- ENDIF -->	
+		{% endif %}
 	</ul>
 	</div>
 </div>

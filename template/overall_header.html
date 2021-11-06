@@ -39,7 +39,7 @@
 
 	(function(d) {
 		var wf = d.createElement('script'), s = d.scripts[0];
-		wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
+		wf.src = 'https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js';
 		wf.async = true;
 		s.parentNode.insertBefore(wf, s);
 	})(document);
@@ -50,11 +50,11 @@
 <link href="{T_STYLESHEET_LANG_LINK}" rel="stylesheet">
 
 <!-- IF S_CONTENT_DIRECTION eq 'rtl' -->
-	<link href="{T_THEME_PATH}/bidi.css?assets_version={T_ASSETS_VERSION}" rel="stylesheet">
+	<link href="{ROOT_PATH}styles/prosilver/theme/bidi.css?assets_version={T_ASSETS_VERSION}" rel="stylesheet">
 <!-- ENDIF -->
 
 <!-- IF S_PLUPLOAD -->
-	<link href="{T_THEME_PATH}/plupload.css?assets_version={T_ASSETS_VERSION}" rel="stylesheet">
+	<link href="{ROOT_PATH}styles/prosilver/theme/plupload.css?assets_version={T_ASSETS_VERSION}" rel="stylesheet">
 <!-- ENDIF -->
 
 <!-- IF S_COOKIE_NOTICE -->
@@ -62,7 +62,7 @@
 <!-- ENDIF -->
 
 <!--[if lte IE 9]>
-	<link href="{T_THEME_PATH}/tweaks.css?assets_version={T_ASSETS_VERSION}" rel="stylesheet">
+	<link href="{ROOT_PATH}styles/prosilver/theme/tweaks.css?assets_version={T_ASSETS_VERSION}" rel="stylesheet">
 <![endif]-->
 
 <!-- EVENT overall_header_head_append -->
@@ -121,22 +121,30 @@
 	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
 		<!-- DEFINE $MICRODATA = ' itemtype="http://schema.org/ListItem" itemprop="itemListElement" itemscope' -->
 		{% set navlink_position = 1 %}
-		<!-- EVENT overall_header_breadcrumbs_before -->
-		<li class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
-			<!-- IF U_SITE_HOME -->
-				<span class="crumb" {$MICRODATA}><a href="{U_SITE_HOME}" itemtype="https://schema.org/Thing" itemscope itemprop="item" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="name">{L_SITE_HOME}</span></a><meta itemprop="position" content="{{ navlink_position }}{% set navlink_position = navlink_position + 1 %}" /></span>
-			<!-- ENDIF -->
-			<!-- EVENT overall_header_breadcrumb_prepend -->
-				<span class="crumb" {$MICRODATA}><a href="{U_INDEX}" itemtype="https://schema.org/Thing" itemscope itemprop="item" accesskey="h" data-navbar-reference="index"><!-- IF not U_SITE_HOME --><i class="icon fa-home fa-fw"></i><!-- ENDIF --><span itemprop="name">{L_INDEX}</span></a><meta itemprop="position" content="{{ navlink_position }}{% set navlink_position = navlink_position + 1 %}" /></span>
+		{% EVENT overall_header_breadcrumbs_before %}
 
-			<!-- BEGIN navlinks -->
-				{% set NAVLINK_NAME = navlinks.BREADCRUMB_NAME | default(navlinks.FORUM_NAME) %}
-				{% set NAVLINK_LINK = navlinks.U_BREADCRUMB | default(navlinks.U_VIEW_FORUM) %}				<!-- EVENT overall_header_navlink_prepend -->
-				<span class="crumb" {$MICRODATA}<!-- IF navlinks.MICRODATA --> {navlinks.MICRODATA}<!-- ENDIF -->><a href="{{ NAVLINK_LINK }}" itemtype="https://schema.org/Thing" itemscope itemprop="item"><span itemprop="name">{{ NAVLINK_NAME }}</span></a><meta itemprop="position" content="{{ navlink_position }}{% set navlink_position = navlink_position + 1 %}" /></span>
+		<li class="breadcrumbs" itemscope itemtype="https://schema.org/BreadcrumbList">
+			{% if U_SITE_HOME %}
+				<span class="crumb" {{ MICRODATA }}><a itemprop="item" href="{{ U_SITE_HOME }}" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="name">{{ L_SITE_HOME }}</span></a><meta itemprop="position" content="{{ navlink_position }}{% set navlink_position = navlink_position + 1 %}" /></span>
+			{% endif %}
+
+			{% EVENT overall_header_breadcrumb_prepend %}
+				<span class="crumb" {{ MICRODATA }}><a itemprop="item" href="{{ U_INDEX }}" accesskey="h" data-navbar-reference="index">{% if not U_SITE_HOME %}<i class="icon fa-home fa-fw"></i>{% endif %}<span itemprop="name">{{ L_INDEX }}</span></a><meta itemprop="position" content="{{ navlink_position }}{% set navlink_position = navlink_position + 1 %}" /></span>
+
+			{% for navlink in navlinks %}
+				{% set NAVLINK_NAME = navlink.BREADCRUMB_NAME | default(navlink.FORUM_NAME) %}
+				{% set NAVLINK_LINK = navlink.U_BREADCRUMB | default(navlink.U_VIEW_FORUM) %}
+
+				{% EVENT overall_header_navlink_prepend %}
+				<span class="crumb" {{ MICRODATA }}{% if navlink.MICRODATA %} {{ navlink.MICRODATA }}{% endif %}><a itemprop="item" href="{{ NAVLINK_LINK }}"><span itemprop="name">{{ NAVLINK_NAME }}</span></a><meta itemprop="position" content="{{ navlink_position }}{% set navlink_position = navlink_position + 1 %}" /></span>
+				{% EVENT overall_header_navlink_append %}
+			{% endfor %}
+
+			{% EVENT overall_header_breadcrumb_append %}
 				<!-- EVENT overall_header_navlink_append -->
 			<!-- END navlinks -->
 		</li>
-		<!-- EVENT overall_header_breadcrumbs_after -->
+		{% EVENT overall_header_breadcrumbs_after %}
 	</ul>
 	<!-- EVENT overall_header_page_body_before -->
 
